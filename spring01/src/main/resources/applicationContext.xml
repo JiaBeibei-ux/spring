@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:C="http://www.springframework.org/schema/c"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<!--配置bean scope属性singleton  无参构造最常用 单实例   prototype 多实例-->
+<!--<bean id="userDao" class="com.haowaner.dao.impl.UserDaoImpl" scope="singleton" init-method="init"></bean>-->
+<!--<bean id="userDao" class="com.haowaner.dao.impl.UserDaoImpl">
+    <property name="name" value="Jack"></property>
+    <property name="list">
+        <list>
+            <value>aaa</value>
+            <value>aaa</value>
+            <value>aaa</value>
+        </list>
+    </property>
+    <property name="userMap">
+        <map>
+            <entry key="user1" value-ref="user"></entry>
+            <entry key="user2" value-ref="user"></entry>
+        </map>
+    </property>
+</bean>-->
+    <bean id="userDao" class="com.haowaner.dao.impl.UserDaoImpl">
+        <constructor-arg name="name" value="SHABI"></constructor-arg>
+        <constructor-arg name="properties">
+            <props>
+                <prop key="p1">dsfads</prop>
+                <prop key="p1">dsfads</prop>
+            </props>
+        </constructor-arg>
+        <constructor-arg name="map">
+            <map>
+                <entry key="map" value="fds"></entry>
+            </map>
+        </constructor-arg>
+        <constructor-arg name="userMap">
+            <map>
+                <entry key="k1" value-ref="user"></entry>
+                <entry key="k2" value-ref="user"></entry>
+            </map>
+        </constructor-arg>
+        <constructor-arg name="list">
+            <list>
+                <value>fhajkdfhdsk</value>
+                <value>dsfjhkhfsd</value>
+            </list>
+        </constructor-arg>
+    </bean>
+    <bean id="user" class="com.haowaner.domain.User">
+        <property name="userName" value="Rose"></property>
+        <property name="age" value="11"></property>
+    </bean>
+    <!--命名空间的引用-->
+    <bean id="userService" class="com.haowaner.service.impl.UserServiceImpl" C:userDao-ref="userDao">
+        <!--通过set方法注入-->
+       <!-- <property name="userDao" ref="userDao"></property>-->
+        <!--构造器方法注入-->
+        <!--<constructor-arg name="userDao" ref="userDao"></constructor-arg>-->
+    </bean>
+<!--工厂方法创建bean-->
+<!--<bean id="staticCityFactory" class="com.haowaner.staticFactory.StaticCityFactory"></bean>
+<bean id="userDao" factory-bean="staticCityFactory" factory-method="getUserDao"></bean>-->
+<!--静态方法-->
+<!--<bean id="userDao" class="com.haowaner.staticFactory.StaticCityFactory1" factory-method="getUserDao"></bean>-->
+</beans>

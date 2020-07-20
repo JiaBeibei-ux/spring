@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd">
+<!--如果没有固定任务 可以不在定义jobDetil和trigger 可以动态添加任务-->
+    <!--spring整合quartz-->
+   <!-- &lt;!&ndash;定义任务的bean&ndash;&gt;
+    <bean id="1Xjob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        &lt;!&ndash;job的名字&ndash;&gt;
+        <property name="name" value="job1"></property>
+        &lt;!&ndash;组别&ndash;&gt;
+        <property name="group" value="group1"></property>
+        &lt;!&ndash;具体的job&ndash;&gt;
+        <property name="jobClass" value="com.haowaner.quartZ2.MyJob"></property>
+        &lt;!&ndash;如果为false 自动删除过时的job&ndash;&gt;
+        <property name="durability" value="true"></property>
+        &lt;!&ndash;添加jobData&ndash;&gt;
+        <property name="applicationContextJobDataKey" value="2555_04"></property>
+    </bean>-->
+
+    <!--配置一个连接池-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+       <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+       <property name="url" value="jdbc:mysql://localhost:3306/test"></property>
+       <property name="username" value="root"></property>
+       <property name="password" value="root"></property>
+    </bean>
+
+    <!--触发器-->
+   <!-- <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="name" value="T1"></property>
+        <property name="group" value="G1_T1"></property>
+        <property name="jobDetail" ref="1Xjob"></property>
+        &lt;!&ndash;使用cron表达式&ndash;&gt;
+        <property name="cronExpression" value="*/2 * * * * ?"></property>
+    </bean>-->
+
+    <!--注册-->
+    <bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <!--<property name="triggers">
+            <list>
+                <ref bean="cronTrigger"></ref>
+            </list>
+        </property>-->
+        <!--添加quqrtz配置-->
+        <property name="quartzProperties">
+            <value>
+
+                org.quartz.scheduler.instanceName: DefaultQuartzScheduler
+
+                org.quartz.threadPool.class: org.quartz.simpl.SimpleThreadPool
+
+                org.quartz.threadPool.threadCount: 10
+
+                org.quartz.threadPool.threadPriority: 5
+
+                org.quartz.jobStore.class=org.quartz.impl.jdbcjobstore.JobStoreTX
+
+                org.quartz.jobStore.tablePrefix = QRTZ_
+            </value>
+        </property>
+        <!--连接池-->
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+
+</beans>

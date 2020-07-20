@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!--mybatis主配置文件 整合数据源的工作交给spring了-->
+<configuration>
+    <!--这里就做一下简单的配置-->
+    <mappers>
+        <mapper resource="mybatis/mapper/accountMapper.xml"></mapper>
+    </mappers>
+</configuration>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<!--spring整合quartz-->
+    <!--定义任务的bean-->
+    <bean id="1Xjob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <!--job的名字-->
+        <property name="name" value="job1"></property>
+        <!--组别-->
+        <property name="group" value="group1"></property>
+        <!--具体的job-->
+        <property name="jobClass" value="com.haowaner.quartZ2.MyJob"></property>
+        <!--如果为false 自动删除过时的job-->
+        <property name="durability" value="true"></property>
+        <!--添加jobData-->
+        <property name="applicationContextJobDataKey" value="2555_04"></property>
+    </bean>
+
+    <!--配置一个连接池-->
+   <!-- <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+       <property name="" value=""></property>
+    </bean>-->
+    <bean id="" class="CronM"></bean>
+    <!--触发器-->
+    <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="name" value="T1"></property>
+        <property name="group" value="G1_T1"></property>
+        <property name="jobDetail" ref="1Xjob"></property>
+        <!--使用cron表达式-->
+        <property name="cronExpression" value="*/2 * * * * ?"></property>
+    </bean>
+
+    <!--注册-->
+    <bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="cronTrigger"></ref>
+            </list>
+        </property>
+        <!--添加quqrtz配置-->
+        <property name="quartzProperties">
+            <value>
+
+                org.quartz.scheduler.instanceName: DefaultQuartzScheduler
+
+                org.quartz.threadPool.class: org.quartz.simpl.SimpleThreadPool
+
+                org.quartz.threadPool.threadCount: 10
+
+                org.quartz.threadPool.threadPriority: 5
+
+                org.quartz.jobStore.class=org.quartz.impl.jdbcjobstore.JobStoreTX
+
+                org.quartz.jobStore.tablePrefix = QRTZ_
+            </value>
+        </property>
+        <!--连接池-->
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+
+</beans>
