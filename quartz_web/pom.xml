@@ -9,7 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <!--控制依赖版本-->
     <properties>
-        <spring.version>5.0.5.RELEASE</spring.version>
+        <spring.version>5.3.18</spring.version>
         <quartZ.version>2.3.0</quartZ.version>
     </properties>
     <dependencies>
